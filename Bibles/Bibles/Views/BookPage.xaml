@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Bibles.Views.BookPage"
+             xmlns:i18n="clr-namespace:Bibles.Helpers"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="{i18n:Translate Book}">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding Book}"
+            Padding="5">
+            <StackLayout
+                Margin="20,0"
+                Orientation="Horizontal"
+                VerticalOptions="CenterAndExpand">
+                <Label
+                    FontAttributes="None"
+                    FontSize="Large"
+                    HeightRequest="25"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="End"
+                    Text="{Binding BookSelected}"
+                    TextColor="Black"
+                    VerticalOptions="Center">
+                </Label>
+                <Label
+                    FontAttributes="None"
+                    FontSize="Large"
+                    HeightRequest="25"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Start"
+                    Text="{Binding ChapterSelected}"
+                    TextColor="Black"
+                    VerticalOptions="Center">
+                </Label>
+            </StackLayout>
+
+            <ListView 
+                BackgroundColor="Silver"
+                IsPullToRefreshEnabled="true"
+                HasUnevenRows="true" 
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                ItemsSource="{Binding Verses}"
+                RefreshCommand="{Binding RefreshCommand}"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="20"
+                                   HasShadow="true"
+                                   Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        Text="{Binding VerseNumber}"
+                                        TextColor="Black">
+                                    </Label>
+                                    <Label
+                                    Grid.Column="1"
+                                        Text="{Binding Text}"
+                                        TextColor="Black">
+                                    </Label>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout 
+                    Margin="40,0"
+                    Orientation="Horizontal"
+                    VerticalOptions="CenterAndExpand">
+                <Button
+                        Command="{Binding PrevCommand}"
+                        BackgroundColor="Navy"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsVisiblePrev, Mode=TwoWay}"
+                        Text="{i18n:Translate Previous}"
+                        TextColor="White"
+                        BorderRadius="23">
+                </Button>
+                <Button
+                        BackgroundColor="Navy"
+                        Command="{Binding NextCommand}"
+                        HorizontalOptions="FillAndExpand"
+                        IsEnabled="{Binding IsVisibleNext, Mode=TwoWay}"
+                        Text="{i18n:Translate Next}"
+                        TextColor="White"
+                        BorderRadius="23">
+                </Button>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
